@@ -68,93 +68,101 @@
     <main class="container">
       <h1>Somos <span>All Capital</span></h1>
       <h2>Tu mejor opción <i class="fa-solid fa-hand-holding-dollar"></i></h2>
-      <div class="carrousel">
-        <div
-          id="carouselExampleDark"
-          class="carousel carousel-dark slide"
-          data-bs-ride="carousel"
-        >
-          <div class="carousel-indicators">
-            <button
-              type="button"
-              data-bs-target="#carouselExampleDark"
-              data-bs-slide-to="0"
-              class="active"
-              aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleDark"
-              data-bs-slide-to="1"
-              aria-label="Slide 2"
-            ></button>
-          </div>
-          <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-              <img src="../img/1.png" class="d-block w-100" alt="..." />
-              <div class="carousel-caption d-none d-md-block"></div>
-            </div>
-            <div class="carousel-item" data-bs-interval="2000">
-              <img src="../img/2.png" class="d-block w-100" alt="..." />
-              <div class="carousel-caption d-none d-md-block"></div>
-            </div>
-          </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      </div>
-      <div class="simulador">
-        <h3>Simulá tu préstamo ahora!</h3>
+      <div class="contenedor">
         <div>
-          <form action="">
-            <div>
-              <label for="">Seleccioná el monto que necesitas</label>
-              <input
-                class="form-control"
-                type="number"
-                min="10000"
-                max="500000"
-                step="10000"
-                id="monto"
-              />
+          <div
+            id="carouselExampleDark"
+            class="carousel carousel-dark slide"
+            data-bs-ride="carousel"
+          >
+            <div class="carousel-indicators">
+              <button
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide-to="0"
+                class="active"
+                aria-current="true"
+                aria-label="Slide 1"
+              ></button>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide-to="1"
+                aria-label="Slide 2"
+              ></button>
             </div>
-            <div>
-              <label for=""
-                >Seleccioná la cantidad de cuotas que más te conviene</label
-              >
-              <select
-                name="cuotas"
-                id="cuotas"
-                select
-                class="form-select"
-                aria-label="Default select example"
-              >
-                <option value="3">3 Cuotas</option>
-                <option value="6">6 Cuotas</option>
-                <option value="12">12 Cuotas</option>
-              </select>
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="10000">
+                <img src="../img/1.png" class="d-block w-100" alt="..." />
+                <div class="carousel-caption d-none d-md-block"></div>
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <img src="../img/2.png" class="d-block w-100" alt="..." />
+                <div class="carousel-caption d-none d-md-block"></div>
+              </div>
             </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleDark"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleDark"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+        <div class="simulador">
+          <h3>Simulá tu préstamo ahora!</h3>
+          <div>
+            <form action="">
+              <div>
+                <label for="">Seleccioná el monto que necesitas</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  min="10000"
+                  max="500000"
+                  step="10000"
+                  id="monto"
+                />
+              </div>
+              <div>
+                <label for=""
+                  >Seleccioná la cantidad de cuotas que más te conviene</label
+                >
+                <select
+                  name="cuotas"
+                  id="cuotas"
+                  select
+                  class="form-select"
+                  aria-label="Default select example"
+                >
+                  <option value="3">3 Cuotas</option>
+                  <option value="6">6 Cuotas</option>
+                  <option value="12">12 Cuotas</option>
+                </select>
+              </div>
 
-            <input type="reset" value="Borrar" class="inputBoton" />
-            <input type="submit" value="Simular" class="inputBoton" />
-          </form>
+              <input type="reset" value="Borrar" class="inputBoton" />
+              <input type="submit" value="Simular" class="inputBoton" />
+            </form>
+          </div>
         </div>
       </div>
     </main>

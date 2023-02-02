@@ -7,7 +7,7 @@
 }
 
 body {
-  height: 100%;
+  height: 100vh;
   font-family: "Nunito", sans-serif;
   font-weight: 400;
   text-align: center;
@@ -16,12 +16,13 @@ body {
 }
 
 .container {
-  width: 80%;
+  width: 85%;
   margin: 1rem auto;
   max-width: 1320px;
   color: white;
 }
 
+/*BARRA DE NAVEGACION*/
 nav {
   background-color: white;
 }
@@ -47,15 +48,32 @@ h2 {
   font-size: 1.7rem;
 }
 
+h3 {
+  font-family: "Indie Flower", cursive;
+  font-size: 2rem;
+}
+
+.inputBoton {
+  background-color: #276938;
+  border: none;
+  color: whitesmoke;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 5px 15px -10px black;
+}
+
+/*INDEX*/
 .cards {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
 
 .cards .card {
-  margin: 01rem;
+  margin: 1rem;
   padding: 2rem;
   background-color: white;
   border-radius: 0.5rem;
@@ -65,14 +83,45 @@ h2 {
   font-size: 1.3rem;
 }
 
-h3 {
-  font-family: "Indie Flower", cursive;
-  font-size: 2rem;
-}
 .cards .card p {
   text-align: left;
 }
 
+/*LOGUIN*/
+.login {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 1rem;
+}
+.login .login__texto {
+  margin: 0.7rem 0rem;
+  padding: 0.3rem;
+  width: 100%;
+}
+
+/*SIMULADOR*/
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.carrousel {
+  width: 90%;
+}
+
+.simulador {
+  margin-top: 2rem;
+  width: 50%;
+}
+
+.simulador label {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/*FOOTER*/
 footer {
   background-color: white;
   color: black;
@@ -94,48 +143,5 @@ footer .redes {
     flex-direction: row;
     justify-content: space-around;
   }
-}
-
-/*LOGUIN*/
-.login {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 1rem;
-}
-.login .login__texto {
-  margin: 0.7rem 0rem;
-  padding: 0.3rem;
-  width: 100%;
-}
-
-.inputBoton {
-  background-color: #276938;
-  border: none;
-  color: whitesmoke;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem;
-  text-align: center;
-  font-size: 1.2rem;
-  border-radius: 0.2rem;
-  box-shadow: 0 5px 20px -10px black;
-}
-
-.informacion {
-  background-color: #276938;
-}
-
-.simulador {
-  margin-top: 2rem;
-  width: 50%;
-}
-
-.simulador label {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.carrousel {
-  width: 75%;
 }
 /*#399b53*/
