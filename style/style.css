@@ -121,4 +121,21 @@ footer .redes {
   box-shadow: 0 5px 20px -10px black;
 }
 
+.informacion {
+  background-color: #276938;
+}
+
+.simulador {
+  margin-top: 2rem;
+  width: 50%;
+}
+
+.simulador label {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.carrousel {
+  width: 75%;
+}
 /*#399b53*/
