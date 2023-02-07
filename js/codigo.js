@@ -53,21 +53,24 @@ let usuario_def = "camifogu";
 let contraseña_def = "123456";
 let continuar = "";
 let listado_prestamos = [];
-let dinero = "";
+let monto = "";
 let cuotas = "";
 let index = "";
 let id_buscado = "";
 
 //CLASES
-class Cada_prestamo {
-  constructor(id, monto, cuotas, interes, monto_total, monto_cuotas) {
-    this.id = id;
+class Prestamo {
+  constructor(monto, cuotas, interes, monto_total, monto_cuotas) {
+    this.id = this.getNextId(listado_prestamos.length);
     this.monto = monto;
     this.cuotas = cuotas;
     this.interes = interes;
     this.monto_total = monto_total;
     this.monto_cuotas = monto_cuotas;
   }
+
+  getNextId = (LastId) => LastId + 1;
+
   get_datos() {
     console.log("----------PRESTAMO SOLICITADO---------");
     console.log("EL IDENTIFICADOR DE ESTE PRESTAMO ES:" + this.id);
@@ -79,7 +82,7 @@ class Cada_prestamo {
   }
 }
 
-//LOGIN O REGISTRO
+/*LOGIN O REGISTRO
 console.log("Somos All Capital");
 let estado_registro = prompt("Usted se encuentra registrado? si/no");
 if (estado_registro === "no") {
@@ -91,41 +94,75 @@ if (estado_registro === "no") {
 } else {
   console.log("Datos incorrectos");
   continuar = 0;
-}
+}*/
 
-//SIMULADOR DE PRESTAMO
-if (continuar === 1) {
-  dinero = parseFloat(
-    prompt("SIMULADOR DE PRESTAMO - Ingrese el monto que desea solicitar:")
-  );
-  console.log("----------SIMULADOR DE PRESTAMO---------");
-  console.log("El monto de dinero que desea solicitar es de $" + dinero);
-  alert("Usted puede solicitar su crédito en 3, 6 o 12 cuotas");
-  cuotas = parseInt(prompt("Ingrese la cantidad de cuotas: "));
-  console.log("La cantidad de cuotas solicitadas es de " + cuotas + " cuotas");
-  console.log("El interes es de: $" + calculo_interes(dinero, cuotas));
-  console.log(
-    "Costo de cuota mensual: $" +
-      (dinero + calculo_interes(dinero, cuotas)) / cuotas
-  );
-  console.log(
-    "Costo del total del crédito: $" +
-      (dinero + calculo_interes(dinero, cuotas))
-  );
-  console.log("");
-}
+//SIMULA PRESTAMO Y LUEGO PREGUNTA SI QUIERE SOLICITAR EL PRESTAMO SIMULADO
+let simular = document.getElementById("simular");
 
+simular.addEventListener("click", function () {
+  monto = document.getElementById("monto");
+  monto = parseFloat(monto.value);
+  cuotas = document.getElementById("cuotas");
+  cuotas = parseInt(cuotas.value);
+  if (cuotas == 3 || cuotas == 6 || cuotas == 12) {
+    let resultados = document.getElementById("resultado_simulacion");
+    let datos = document.createElement("ul");
+    datos.innerHTML = `<li>El monto de dinero que desea solicitar es de $${monto}</li>
+  <li>La cantidad de cuotas solicitadas es de ${cuotas} cuotas</li>
+  <li>El interes es de $${calculo_interes(monto, cuotas)}</li>
+  <li>Costo de cuota mensual: $${(
+    (monto + calculo_interes(monto, cuotas)) /
+    cuotas
+  ).toFixed(2)}</li>
+  <li>Costo del total del crédito: $${(
+    monto + calculo_interes(monto, cuotas)
+  ).toFixed(2)}</li>`;
+
+    resultados.append(datos);
+
+    let continuar = document.createElement("div");
+    continuar.innerHTML = `<h2>¿Querés solicitar el préstamo que simulaste?</h2>
+    <button class="inputBoton" id="solicitar">Solicitar préstamo</button>
+    <button class="inputBoton" id="volver"><a href="simulador.html" class="nav-link active">Volver a simular</a></button>`;
+    resultados.append(continuar);
+
+    let solicitar = document.getElementById("solicitar");
+    solicitar.addEventListener("click", function () {
+      if (listado_prestamos.length <= 3) {
+        let nuevo_prestamo = new Prestamo(
+          monto,
+          cuotas,
+          calculo_interes(monto, cuotas),
+          monto + calculo_interes(monto, cuotas),
+          (monto + calculo_interes(monto, cuotas)) / cuotas
+        );
+        listado_prestamos.push(nuevo_prestamo);
+        nuevo_prestamo.get_datos();
+        continuar.innerHTML = `<h2>Usted ha solicitado ${listado_prestamos.length} prestamo/s exitosamente</h2>`;
+        resultados.append(continuar);
+      } else {
+        continuar.innerHTML = `<h2>Usted ha solicitado ${listado_prestamos.length} prestamo/s exitosamente</h2>`;
+        resultados.append(continuar);
+      }
+    });
+  } else {
+    alert("Cantidad de cuotas incorrecta");
+  }
+});
+
+console.log(listado_prestamos);
+
+/*
 //SOLICITUD DE PRESTAMO
-continuar = prompt("Desea solicitar el prestamo simulado? si/no");
-if (continuar === "si") {
+
   if (listado_prestamos.length <= 3) {
-    let nuevo_prestamo = new Cada_prestamo(
+    let nuevo_prestamo = new Prestamo(
       listado_prestamos.length + 1,
-      dinero,
+      monto,
       cuotas,
-      calculo_interes(dinero, cuotas),
-      dinero + calculo_interes(dinero, cuotas),
-      (dinero + calculo_interes(dinero, cuotas)) / cuotas
+      calculo_interes(monto, cuotas),
+      monto + calculo_interes(monto, cuotas),
+      (monto + calculo_interes(monto, cuotas)) / cuotas
     );
     listado_prestamos.push(nuevo_prestamo);
     nuevo_prestamo.get_datos();
@@ -140,17 +177,17 @@ if (continuar === "si") {
 }
 continuar = prompt("Desea solicitar otro prestamo? si/no");
 while (continuar === "si" && listado_prestamos.length <= 2) {
-  dinero = parseFloat(prompt("Ingrese el monto que desea solicitar:"));
+  monto = parseFloat(prompt("Ingrese el monto que desea solicitar:"));
   alert("Usted puede solicitar su crédito en 3, 6 o 12 cuotas");
   cuotas = parseInt(prompt("Ingrese la cantidad de cuotas: "));
 
-  let nuevo_prestamo = new Cada_prestamo(
+  let nuevo_prestamo = new Prestamo(
     listado_prestamos.length + 1,
-    dinero,
+    monto,
     cuotas,
-    calculo_interes(dinero, cuotas),
-    dinero + calculo_interes(dinero, cuotas),
-    (dinero + calculo_interes(dinero, cuotas)) / cuotas
+    calculo_interes(monto, cuotas),
+    monto + calculo_interes(monto, cuotas),
+    (monto + calculo_interes(monto, cuotas)) / cuotas
   );
   listado_prestamos.push(nuevo_prestamo);
   nuevo_prestamo.get_datos();
@@ -162,24 +199,28 @@ while (continuar === "si" && listado_prestamos.length <= 2) {
 
   continuar = prompt("Desea solicitar otro prestamo? si/no");
 }
+
 if (listado_prestamos.length > 2) {
   console.log("Usted ha alcanzado su limite de creditos disponibles");
   alert("Usted ha alcanzado su limite de creditos disponibles");
 }
 
+//BORRAR PRESTAMO
 if (listado_prestamos.length > 0) {
   continuar = prompt(
     "Desea cancelar alguna de los prestamos solicitados? si/no"
   );
   if (continuar == "si") {
     id_buscado = prompt("Ingrese el ID del prestamo que desea cancelar: ");
-    index = listado_prestamos.indexOf(id_buscado);
-    listado_prestamos.splice(index, 1);
+    /*index = listado_prestamos.indexOf(id_buscado);
+    listado_prestamos.splice(index, 1);*/
+/*const listado_prestamos = listado.prestamos.filter(
+      (prestamo) => prestamo.id != id_buscado
+    );
     console.log("El prestamo se ha cancelado exitosamente");
     console.log(listado_prestamos);
   }
   //INDEXOF BUSCA EL INDICE
   //SPLICE BORRA, NECESITA EL INDICE
 }
-
-console.log("ADIOS");
+*/

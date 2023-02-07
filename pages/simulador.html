@@ -49,7 +49,7 @@
                 <a class="nav-link active" href="login.html">Ingresar</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="registro.html">Registrarse</a>
+                <a class="nav-link active" href="login.html">Registrarse</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" href="simulador.html">Simulador</a>
@@ -130,39 +130,27 @@
         <div class="simulador">
           <h3>Simulá tu préstamo ahora!</h3>
           <div>
-            <form action="">
-              <div class="items">
-                <label for="">Seleccioná el monto que necesitas</label>
-                <input
-                  class="form-control"
-                  type="number"
-                  min="10000"
-                  max="500000"
-                  step="10000"
-                  id="monto"
-                />
-              </div>
-              <div class="items">
-                <label for=""
-                  >Seleccioná la cantidad de cuotas que más te conviene</label
-                >
-                <select
-                  name="cuotas"
-                  id="cuotas"
-                  select
-                  class="form-select"
-                  aria-label="Default select example"
-                >
-                  <option value="3">3 Cuotas</option>
-                  <option value="6">6 Cuotas</option>
-                  <option value="12">12 Cuotas</option>
-                </select>
-              </div>
-
-              <input type="reset" value="Borrar" class="inputBoton" />
-              <input type="submit" value="Simular" class="inputBoton" />
-            </form>
+            <div class="items">
+              <label for="">Seleccioná el monto que necesitas</label>
+              <input
+                class="form-control"
+                type="number"
+                min="10000"
+                max="500000"
+                step="10000"
+                id="monto"
+              />
+            </div>
+            <div class="items">
+              <label for=""
+                >Seleccioná la cantidad de cuotas que más te conviene, podés
+                solitar 3, 6 o 12 cuotas!</label
+              >
+              <input type="text" class="form-control" id="cuotas" />
+            </div>
+            <button class="inputBoton" id="simular">Simular</button>
           </div>
+          <div id="resultado_simulacion"></div>
         </div>
       </div>
     </main>
@@ -195,7 +183,7 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
-    <!-- MI JS
-    <script src="js/codigo.js"></script>-->
+    <!-- MI JS-->
+    <script src="../js/codigo.js"></script>
   </body>
 </html>
