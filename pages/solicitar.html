@@ -71,7 +71,7 @@
       <h3>Solicitá tu préstamo ahora!</h3>
       <div class="grid">
         <div>
-          <form action="">
+          <div>
             <div class="items">
               <label for="">Seleccioná el monto que necesitas</label>
               <input
@@ -85,24 +85,16 @@
             </div>
             <div class="items">
               <label for=""
-                >Seleccioná la cantidad de cuotas que más te conviene</label
+                >Seleccioná la cantidad de cuotas que más te conviene, podés
+                solitar 3, 6 o 12 cuotas!</label
               >
-              <select
-                name="cuotas"
-                id="cuotas"
-                select
-                class="form-select"
-                aria-label="Default select example"
-              >
-                <option value="3">3 Cuotas</option>
-                <option value="6">6 Cuotas</option>
-                <option value="12">12 Cuotas</option>
-              </select>
+              <input type="number" class="form-control" id="cuotas" />
             </div>
-
-            <input type="reset" value="Borrar" class="inputBoton" />
-            <input type="submit" value="Solicitar" class="inputBoton" />
-          </form>
+            <button class="inputBoton" id="solicitud">
+              Solicitar préstamo
+            </button>
+          </div>
+          <div id="resultado_solicitud"></div>
         </div>
         <div>
           <img src="../img/3.jpg" alt="" />

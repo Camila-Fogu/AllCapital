@@ -1,34 +1,4 @@
 //FUNCIONES
-function registro(usuario, contraseña, contraseña_rep) {
-  usuario = prompt("Ingrese un nombre de usuario: ");
-  contraseña = prompt("Ingrese una contraseña: ");
-  contraseña_rep = prompt("Por favor, repita la contraseña");
-
-  while (contraseña != contraseña_rep) {
-    alert("Las contraseñas no coinciden. Por favor vuelva a ingresarlas");
-    contraseña = prompt("Ingrese una contraseña: ");
-    contraseña_rep = prompt("Por favor, repita la contraseña");
-  }
-  console.log(
-    "Bienvenido " + usuario + ". Usted se ha registrado correctamente!"
-  );
-  console.log("");
-  alert("Bienvenido " + usuario + ". Usted se ha registrado correctamente!");
-}
-
-function login(usuario, contraseña) {
-  nombre = prompt("Ingrese su nombre de usuario: ");
-  contra = prompt("Ingrese su contraseña");
-
-  while (usuario != nombre || contraseña != contra) {
-    alert("Credenciales invalidas, vuelva a ingrasarlas por favor");
-    nombre = prompt("Ingrese su usuario: ");
-    contra = prompt("Ingrese su contaseña: ");
-  }
-  console.log("Bienvenido/a " + nombre);
-  alert("Bienvenido/a " + nombre);
-}
-
 function calculo_interes(dinero, cuotas) {
   let interes = "";
   if (cuotas == 3) {
@@ -46,19 +16,34 @@ function calculo_interes(dinero, cuotas) {
 }
 
 //VARIABLES
-let usuario_new = "";
-let contraseña_new = "";
-let contraseña_newrep = "";
-let usuario_def = "camifogu";
-let contraseña_def = "123456";
+let nombre = "";
+let apellido = "";
+let dni = "";
+let tel = "";
+let usuario = "";
+let contraseña = "";
+let contraseña_rep = "";
+let listado_usuarios = [];
 let continuar = "";
 let listado_prestamos = [];
 let monto = "";
 let cuotas = "";
-let index = "";
 let id_buscado = "";
 
-//CLASES
+//CLASS USUARIOS
+class Usuario {
+  constructor(nombre, apellido, dni, tel, usuario, contraseña, contraseña_rep) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.idni = dni;
+    this.tel = tel;
+    this.usuario = usuario;
+    this.contraseña = contraseña;
+    this.contraseña_rep = contraseña_rep;
+  }
+}
+
+//CLASS PRESTAMO
 class Prestamo {
   constructor(monto, cuotas, interes, monto_total, monto_cuotas) {
     this.id = this.getNextId(listado_prestamos.length);
@@ -70,31 +55,50 @@ class Prestamo {
   }
 
   getNextId = (LastId) => LastId + 1;
-
-  get_datos() {
-    console.log("----------PRESTAMO SOLICITADO---------");
-    console.log("EL IDENTIFICADOR DE ESTE PRESTAMO ES:" + this.id);
-    console.log("MONTO SOLICITADO: " + this.monto);
-    console.log("CUOTAS A PAGAR: " + this.cuotas);
-    console.log("INTERES: " + this.interes);
-    console.log("MONTO TOTAL A PAGAR: " + this.monto_total);
-    console.log("VALOR DE CADA CUOTA: " + this.monto_cuotas);
-  }
 }
 
-/*LOGIN O REGISTRO
-console.log("Somos All Capital");
-let estado_registro = prompt("Usted se encuentra registrado? si/no");
-if (estado_registro === "no") {
-  registro(usuario_new, contraseña_new, contraseña_newrep);
-  continuar = 1;
-} else if (estado_registro === "si") {
-  login(usuario_def, contraseña_def);
-  continuar = 1;
-} else {
-  console.log("Datos incorrectos");
-  continuar = 0;
-}*/
+//REGISTRO DE NUEVO USUARIO
+let boton_registro = document.getElementById("registro");
+boton_registro.addEventListener("click", function () {
+  nombre = document.getElementById("nombre");
+  nombre = nombre.value;
+
+  apellido = document.getElementById("apellido");
+  apellido = apellido.value;
+
+  dni = document.getElementById("dni");
+  dni = dni.value;
+
+  tel = document.getElementById("tel");
+  tel = tel.value;
+
+  usuario = document.getElementById("usuario");
+  usuario = usuario.value;
+
+  contraseña = document.getElementById("contraseña");
+  contraseña = contraseña.value;
+
+  contraseña_rep = document.getElementById("contraseña_rep");
+  contraseña_rep = contraseña_rep.value;
+
+  if (contraseña != contraseña_rep) {
+    alert("Las contraseñas no coinciden. Por favor vuelva a ingresarlas");
+  } else {
+    let nuevo_usuario = new Usuario(
+      nombre,
+      apellido,
+      dni,
+      tel,
+      usuario,
+      contraseña,
+      contraseña_rep
+    );
+    listado_usuarios.push(nuevo_usuario);
+    console.log(listado_usuarios);
+    let usuarios_JSON = JSON.stringify(listado_usuarios);
+    localStorage.setItem("usuarios", usuarios_JSON);
+  }
+});
 
 //SIMULA PRESTAMO Y LUEGO PREGUNTA SI QUIERE SOLICITAR EL PRESTAMO SIMULADO
 let simular = document.getElementById("simular");
@@ -137,7 +141,11 @@ simular.addEventListener("click", function () {
           (monto + calculo_interes(monto, cuotas)) / cuotas
         );
         listado_prestamos.push(nuevo_prestamo);
-        nuevo_prestamo.get_datos();
+        console.log(listado_prestamos);
+
+        let listado_prestamos_JSON = JSON.stringify(listado_prestamos);
+        localStorage.setItem("lista_prestamos", listado_prestamos_JSON);
+
         continuar.innerHTML = `<h2>Usted ha solicitado ${listado_prestamos.length} prestamo/s exitosamente</h2>`;
         resultados.append(continuar);
       } else {
@@ -149,78 +157,3 @@ simular.addEventListener("click", function () {
     alert("Cantidad de cuotas incorrecta");
   }
 });
-
-console.log(listado_prestamos);
-
-/*
-//SOLICITUD DE PRESTAMO
-
-  if (listado_prestamos.length <= 3) {
-    let nuevo_prestamo = new Prestamo(
-      listado_prestamos.length + 1,
-      monto,
-      cuotas,
-      calculo_interes(monto, cuotas),
-      monto + calculo_interes(monto, cuotas),
-      (monto + calculo_interes(monto, cuotas)) / cuotas
-    );
-    listado_prestamos.push(nuevo_prestamo);
-    nuevo_prestamo.get_datos();
-    console.log(
-      "Usted ha solicitado " +
-        listado_prestamos.length +
-        " prestamo/s exitosamente"
-    );
-  } else {
-    console.log("Usted alcanzo su limite de creditos disponibles");
-  }
-}
-continuar = prompt("Desea solicitar otro prestamo? si/no");
-while (continuar === "si" && listado_prestamos.length <= 2) {
-  monto = parseFloat(prompt("Ingrese el monto que desea solicitar:"));
-  alert("Usted puede solicitar su crédito en 3, 6 o 12 cuotas");
-  cuotas = parseInt(prompt("Ingrese la cantidad de cuotas: "));
-
-  let nuevo_prestamo = new Prestamo(
-    listado_prestamos.length + 1,
-    monto,
-    cuotas,
-    calculo_interes(monto, cuotas),
-    monto + calculo_interes(monto, cuotas),
-    (monto + calculo_interes(monto, cuotas)) / cuotas
-  );
-  listado_prestamos.push(nuevo_prestamo);
-  nuevo_prestamo.get_datos();
-  console.log(
-    "Usted ha solicitado " +
-      listado_prestamos.length +
-      " prestamo/s exitosamente"
-  );
-
-  continuar = prompt("Desea solicitar otro prestamo? si/no");
-}
-
-if (listado_prestamos.length > 2) {
-  console.log("Usted ha alcanzado su limite de creditos disponibles");
-  alert("Usted ha alcanzado su limite de creditos disponibles");
-}
-
-//BORRAR PRESTAMO
-if (listado_prestamos.length > 0) {
-  continuar = prompt(
-    "Desea cancelar alguna de los prestamos solicitados? si/no"
-  );
-  if (continuar == "si") {
-    id_buscado = prompt("Ingrese el ID del prestamo que desea cancelar: ");
-    /*index = listado_prestamos.indexOf(id_buscado);
-    listado_prestamos.splice(index, 1);*/
-/*const listado_prestamos = listado.prestamos.filter(
-      (prestamo) => prestamo.id != id_buscado
-    );
-    console.log("El prestamo se ha cancelado exitosamente");
-    console.log(listado_prestamos);
-  }
-  //INDEXOF BUSCA EL INDICE
-  //SPLICE BORRA, NECESITA EL INDICE
-}
-*/
