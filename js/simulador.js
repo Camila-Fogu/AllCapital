@@ -66,9 +66,10 @@ simular.addEventListener("click", function () {
       <button class="inputBoton" id="volver"><a href="simulador.html" class="nav-link active">Volver a simular</a></button>`;
     resultados.append(continuar);
 
+    //SOLICITAR PRESTAMO SIMULADO
     let solicitar = document.getElementById("solicitar");
     solicitar.addEventListener("click", function () {
-      if (listado_prestamos.length <= 3) {
+      if (listado_prestamos.length < 3) {
         let nuevo_prestamo = new Prestamo(
           monto,
           cuotas,
@@ -76,16 +77,22 @@ simular.addEventListener("click", function () {
           monto + calculo_interes(monto, cuotas),
           (monto + calculo_interes(monto, cuotas)) / cuotas
         );
-        listado_prestamos.push(nuevo_prestamo);
-        console.log(listado_prestamos);
 
-        let listado_prestamos_JSON = JSON.stringify(listado_prestamos);
-        localStorage.setItem("lista_prestamos", listado_prestamos_JSON);
+        let recupero_prestamos = localStorage.getItem("prestamos");
+        recupero_prestamos = JSON.parse(recupero_prestamos);
+
+        if (recupero_prestamos) {
+          listado_prestamos = recupero_prestamos;
+        }
+
+        listado_prestamos.push(nuevo_prestamo);
+        let prestamos_JSON = JSON.stringify(listado_prestamos);
+        localStorage.setItem("prestamos", prestamos_JSON);
 
         continuar.innerHTML = `<h2>Usted ha solicitado ${listado_prestamos.length} prestamo/s exitosamente</h2>`;
         resultados.append(continuar);
       } else {
-        continuar.innerHTML = `<h2>Usted ha solicitado ${listado_prestamos.length} prestamo/s exitosamente</h2>`;
+        continuar.innerHTML = `<h2>Usted ha alcanzado el límite de préstamos</h2>`;
         resultados.append(continuar);
       }
     });
