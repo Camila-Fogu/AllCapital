@@ -68,8 +68,16 @@ simular.addEventListener("click", function () {
 
     //SOLICITAR PRESTAMO SIMULADO
     let solicitar = document.getElementById("solicitar");
+
     solicitar.addEventListener("click", function () {
-      if (listado_prestamos.length < 3) {
+      let recupero_prestamos = localStorage.getItem("prestamos");
+      recupero_prestamos = JSON.parse(recupero_prestamos);
+
+      if (recupero_prestamos) {
+        listado_prestamos = recupero_prestamos;
+      }
+
+      if (listado_prestamos.length <= 3) {
         let nuevo_prestamo = new Prestamo(
           monto,
           cuotas,
@@ -78,18 +86,12 @@ simular.addEventListener("click", function () {
           (monto + calculo_interes(monto, cuotas)) / cuotas
         );
 
-        let recupero_prestamos = localStorage.getItem("prestamos");
-        recupero_prestamos = JSON.parse(recupero_prestamos);
-
-        if (recupero_prestamos) {
-          listado_prestamos = recupero_prestamos;
-        }
-
         listado_prestamos.push(nuevo_prestamo);
         let prestamos_JSON = JSON.stringify(listado_prestamos);
         localStorage.setItem("prestamos", prestamos_JSON);
 
-        continuar.innerHTML = `<h2>Usted ha solicitado ${listado_prestamos.length} prestamo/s exitosamente</h2>`;
+        continuar.innerHTML = `<h2>Usted ha solicitado su prestamo n° ${listado_prestamos.length} exitosamente</h2>
+        <button class="inputBoton" id="volver"><a href="simulador.html" class="nav-link active">Simular otro préstamo</a></button>`;
         resultados.append(continuar);
       } else {
         continuar.innerHTML = `<h2>Usted ha alcanzado el límite de préstamos</h2>`;
@@ -98,5 +100,51 @@ simular.addEventListener("click", function () {
     });
   } else {
     alert("Cantidad de cuotas incorrecta");
+  }
+});
+
+let consultar = document.getElementById("consultar");
+consultar.addEventListener("click", function () {
+  let recupero_prestamos = localStorage.getItem("prestamos");
+  recupero_prestamos = JSON.parse(recupero_prestamos);
+
+  if (recupero_prestamos) {
+    listado_prestamos = recupero_prestamos;
+    let resultado_consulta = document.getElementById("resultado_consulta");
+    let arrays = document.createElement("ul");
+
+    console.log(listado_prestamos);
+
+    for (let prestamo of listado_prestamos) {
+      arrays.innerHTML = `<li> PRESTAMO N° ${prestamo.id}</li>
+      <li> Monto: ${prestamo.monto}</li>
+      <li> Cuotas: ${prestamo.cuotas}</li>
+      <li> Interes: ${prestamo.interes}</li>
+      <li> Monto total a pagar: ${prestamo.monto_total}</li>
+      <li> Monto de cada cuota: ${prestamo.monto_cuotas}</li>`;
+
+      resultado_consulta.append(arrays);
+    }
+
+    let continuar = document.createElement("div");
+    continuar.innerHTML = `<h4>¿Querés cancelar alguno de tus préstamos solicitados?</h4>
+    <label>Ingresá el N°</label>
+    <input type="number" class="form-control" id="numero_cancelar" />
+    <button class="inputBoton" id="cancelar">Cancelar préstamo</button>`;
+    resultado_consulta.append(continuar);
+
+    let cancelar = document.getElementById("cancelar");
+    cancelar.addEventListener("click", function () {
+      let prestamo_cancelar = document.getElementById("numero_cancelar");
+      prestamo_cancelar = prestamo_cancelar.value;
+
+      listado_prestamos = listado_prestamos.filter(
+        (prestamo) => prestamo.id != prestamo_cancelar
+      );
+      let prestamos_JSON = JSON.stringify(listado_prestamos);
+      localStorage.setItem("prestamos", prestamos_JSON);
+    });
+  } else {
+    alert("Usted no tiene préstamos solicitados");
   }
 });

@@ -127,30 +127,37 @@
             </button>
           </div>
         </div>
-        <div class="simulador">
-          <h3>Simulá tu préstamo ahora y solicitalo con solo un click!</h3>
+        <div class="grid simulador">
           <div>
-            <div class="items">
-              <label for="">Seleccioná el monto que necesitas</label>
-              <input
-                class="form-control"
-                type="number"
-                min="10000"
-                max="500000"
-                step="10000"
-                id="monto"
-              />
+            <h3>Simulá tu préstamo ahora y solicitalo con solo un click!</h3>
+            <div>
+              <div class="items">
+                <label for="">Seleccioná el monto que necesitas</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  min="10000"
+                  max="500000"
+                  step="10000"
+                  id="monto"
+                />
+              </div>
+              <div class="items">
+                <label for=""
+                  >Seleccioná la cantidad de cuotas que más te conviene, podés
+                  solitar 3, 6 o 12 cuotas!</label
+                >
+                <input type="number" class="form-control" id="cuotas" />
+              </div>
+              <button class="inputBoton" id="simular">Simular</button>
             </div>
-            <div class="items">
-              <label for=""
-                >Seleccioná la cantidad de cuotas que más te conviene, podés
-                solitar 3, 6 o 12 cuotas!</label
-              >
-              <input type="number" class="form-control" id="cuotas" />
-            </div>
-            <button class="inputBoton" id="simular">Simular</button>
+            <div id="resultado_simulacion"></div>
           </div>
-          <div id="resultado_simulacion"></div>
+          <div>
+            <h3>Consultá tus préstamos y solicitá su cancelación!</h3>
+            <button class="inputBoton" id="consultar">Consultar</button>
+            <div id="resultado_consulta"></div>
+          </div>
         </div>
       </div>
     </main>
