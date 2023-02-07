@@ -1,0 +1,118 @@
+//VARIABLES
+let nombre = "";
+let apellido = "";
+let dni = "";
+let tel = "";
+let usuario = "";
+let contraseña = "";
+let contraseña_rep = "";
+let listado_usuarios = [];
+let continuar = "";
+let encontrado = "";
+
+//CLASS USUARIOS
+class Usuario {
+  constructor(nombre, apellido, dni, tel, usuario, contraseña, contraseña_rep) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.dni = dni;
+    this.tel = tel;
+    this.usuario = usuario;
+    this.contraseña = contraseña;
+    this.contraseña_rep = contraseña_rep;
+  }
+}
+
+//REGISTRO DE NUEVO USUARIO
+let boton_registro = document.getElementById("registro");
+boton_registro.addEventListener("click", function () {
+  nombre = document.getElementById("nombre");
+  nombre = nombre.value;
+
+  apellido = document.getElementById("apellido");
+  apellido = apellido.value;
+
+  dni = document.getElementById("dni");
+  dni = dni.value;
+
+  tel = document.getElementById("tel");
+  tel = tel.value;
+
+  usuario = document.getElementById("usuario");
+  usuario = usuario.value;
+
+  contraseña = document.getElementById("contraseña");
+  contraseña = contraseña.value;
+
+  contraseña_rep = document.getElementById("contraseña_rep");
+  contraseña_rep = contraseña_rep.value;
+
+  if (contraseña != contraseña_rep) {
+    alert("Las contraseñas no coinciden. Por favor vuelva a ingresarlas");
+  } else {
+    let nuevo_usuario = new Usuario(
+      nombre,
+      apellido,
+      dni,
+      tel,
+      usuario,
+      contraseña,
+      contraseña_rep
+    );
+
+    let recupero_usuarios = localStorage.getItem("usuarios");
+    recupero_usuarios = JSON.parse(recupero_usuarios);
+
+    if (recupero_usuarios) {
+      listado_usuarios = recupero_usuarios;
+    }
+
+    listado_usuarios.push(nuevo_usuario);
+    let usuarios_JSON = JSON.stringify(listado_usuarios);
+    localStorage.setItem("usuarios", usuarios_JSON);
+
+    let resultados = document.getElementById("resultado_registro");
+    continuar = document.createElement("div");
+    continuar.innerHTML = `<h4>${nombre} te registraste exitosamente!</h4>
+    <h4>Loggeate y empezá a disfrutar de nuestros servicios!</h4>`;
+    resultados.append(continuar);
+  }
+});
+
+//LOGIN DE USUARIO CREADO
+let boton_login = document.getElementById("login");
+boton_login.addEventListener("click", function () {
+  let nombre_usuario = document.getElementById("nombre_usuario");
+  let password = document.getElementById("password");
+  let recupero_usuarios = localStorage.getItem("usuarios");
+  recupero_usuarios = JSON.parse(recupero_usuarios);
+
+  for (let usuario of recupero_usuarios) {
+    if (
+      nombre_usuario.value == usuario.usuario &&
+      password.value == usuario.contraseña
+    ) {
+      let resultados = document.getElementById("resultado_login");
+      continuar = document.createElement("div");
+      continuar.innerHTML = `<h4>${nombre} Ingresaste exitosamente!</h4>
+      <h4>Ya podes comenzar a operar con nuestros servicios!</h4>`;
+      resultados.append(continuar);
+
+      let usuario_logueado = {
+        nombre_usuario: nombre_usuario.value,
+        password: password.value,
+      };
+
+      let logueado_JSON = JSON.stringify(usuario_logueado);
+      sessionStorage.setItem("usuario_logueado", logueado_JSON);
+
+      encontrado = 1;
+    }
+  }
+  if (encontrado != 1) {
+    let resultados = document.getElementById("resultado_login");
+    continuar = document.createElement("div");
+    continuar.innerHTML = `<h4>Los datos ingresados no corresponden a un usuario registrado</h4>`;
+    resultados.append(continuar);
+  }
+});
