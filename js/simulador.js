@@ -143,6 +143,10 @@ consultar.addEventListener("click", function () {
       );
       let prestamos_JSON = JSON.stringify(listado_prestamos);
       localStorage.setItem("prestamos", prestamos_JSON);
+
+      let cancelado = document.createElement("div");
+      cancelado.innerHTML = `<h4>El préstamo ha sido cancelado</h4>`;
+      resultado_consulta.append(cancelado);
     });
   } else {
     alert("Usted no tiene préstamos solicitados");
