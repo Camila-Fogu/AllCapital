@@ -88,6 +88,20 @@ boton_registro.addEventListener("click", function () {
     continuar.innerHTML = `<h4>${nombre} te registraste exitosamente!</h4>
     <h4>Loggeate y empezá a disfrutar de nuestros servicios!</h4>`;
     resultados.append(continuar);
+
+    Swal.fire({
+      icon: "success",
+      iconColor: "#399b53",
+      color: "#276938",
+      title: "Te registraste exitosamente!",
+      text: "Loggeate y empezá a disfrutar de nuestros servicios",
+      showClass: {
+        popup: "animate__animated animate__bounceIn",
+      },
+      hideClass: {
+        popup: "animate__animated animate__bounceOut",
+      },
+    });
   }
 });
 
@@ -107,7 +121,7 @@ boton_login.addEventListener("click", function () {
       ) {
         let resultados = document.getElementById("resultado_login");
         continuar = document.createElement("div");
-        continuar.innerHTML = `<h4>${nombre} Ingresaste exitosamente!</h4>
+        continuar.innerHTML = `<h4>${nombre} ingresaste exitosamente!</h4>
       <h4>Ya podes comenzar a operar con nuestros servicios!</h4>`;
         resultados.append(continuar);
 
@@ -140,7 +154,8 @@ boton_login.addEventListener("click", function () {
     Swal.fire({
       icon: "warning",
       iconColor: "#399b53",
-      color: "#276938",
+      color: "#399b53",
+      confirmButtonColor: "#276938",
       title: "Los datos ingresados no corresponden a un usuario registrado",
       showClass: {
         popup: "animate__animated animate__bounceIn",
