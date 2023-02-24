@@ -25,7 +25,8 @@ let id_buscado = "";
 //CLASS PRESTAMO
 class Prestamo {
   constructor(monto, cuotas, interes, monto_total, monto_cuotas) {
-    this.id = this.getNextId(listado_prestamos.length);
+
+    this.id = this.getNextId();
     this.monto = monto;
     this.cuotas = cuotas;
     this.interes = interes;
@@ -33,7 +34,15 @@ class Prestamo {
     this.monto_cuotas = monto_cuotas;
   }
 
-  getNextId = (LastId) => LastId + 1;
+  getNextId = () => {
+    // en el caso de que el listado de prestamos este vacio el id seria 1 ya que es el 1ro
+    if(listado_prestamos.length === 0){
+      return 1
+    }
+    // sino , busco el ultimo prestamo 
+    const ultimoPrestamo = listado_prestamos[listado_prestamos.length - 1]
+    return ultimoPrestamo.id + 1 // devuelvo el ultimo id + 1
+  };
 }
 
 //SIMULA PRESTAMO Y LUEGO PREGUNTA SI QUIERE SOLICITAR EL PRESTAMO SIMULADO
@@ -70,12 +79,7 @@ simular.addEventListener("click", function () {
     let solicitar = document.getElementById("solicitar");
 
     solicitar.addEventListener("click", function () {
-      let recupero_prestamos = localStorage.getItem("prestamos");
-      recupero_prestamos = JSON.parse(recupero_prestamos);
-
-      if (recupero_prestamos) {
-        listado_prestamos = recupero_prestamos;
-      }
+      listado_prestamos = JSON.parse(localStorage.getItem("prestamos")) || [];
 
       if (listado_prestamos.length <= 3) {
         let nuevo_prestamo = new Prestamo(
@@ -89,6 +93,7 @@ simular.addEventListener("click", function () {
         listado_prestamos.push(nuevo_prestamo);
         let prestamos_JSON = JSON.stringify(listado_prestamos);
         localStorage.setItem("prestamos", prestamos_JSON);
+        console.log(listado_prestamos)
 
         continuar.innerHTML = `<h2>Usted ha solicitado su prestamo n° ${listado_prestamos.length} exitosamente</h2>
         <button class="inputBoton" id="volver"><a href="simulador.html" class="nav-link active">Simular otro préstamo</a></button>`;
@@ -104,27 +109,28 @@ simular.addEventListener("click", function () {
 });
 
 let consultar = document.getElementById("consultar");
-consultar.addEventListener("click", function () {
-  let recupero_prestamos = localStorage.getItem("prestamos");
-  recupero_prestamos = JSON.parse(recupero_prestamos);
-
-  if (recupero_prestamos) {
-    listado_prestamos = recupero_prestamos;
+consultar.addEventListener("click", function () 
+{
+  let listado_prestamos = JSON.parse(localStorage.getItem("prestamos"));
+  if (listado_prestamos) 
+  {
     let resultado_consulta = document.getElementById("resultado_consulta");
+    resultado_consulta.innerHTML = ''
     let arrays = document.createElement("ul");
 
-    console.log(listado_prestamos);
-
-    for (let prestamo of listado_prestamos) {
-      arrays.innerHTML = `<li> PRESTAMO N° ${prestamo.id}</li>
+    for (let prestamo of listado_prestamos) 
+    {
+      arrays.innerHTML += `<li> PRESTAMO N° ${prestamo.id}</li>
       <li> Monto: ${prestamo.monto}</li>
       <li> Cuotas: ${prestamo.cuotas}</li>
       <li> Interes: ${prestamo.interes}</li>
       <li> Monto total a pagar: ${prestamo.monto_total}</li>
-      <li> Monto de cada cuota: ${prestamo.monto_cuotas}</li>`;
-
-      resultado_consulta.append(arrays);
+      <li> Monto de cada cuota: ${prestamo.monto_cuotas}</li>
+      <hr>
+      `;
     }
+    
+    resultado_consulta.append(arrays);
 
     let continuar = document.createElement("div");
     continuar.innerHTML = `<h4>¿Querés cancelar alguno de tus préstamos solicitados?</h4>
@@ -138,9 +144,7 @@ consultar.addEventListener("click", function () {
       let prestamo_cancelar = document.getElementById("numero_cancelar");
       prestamo_cancelar = prestamo_cancelar.value;
 
-      listado_prestamos = listado_prestamos.filter(
-        (prestamo) => prestamo.id != prestamo_cancelar
-      );
+      listado_prestamos = listado_prestamos.filter((prestamo) => prestamo.id != prestamo_cancelar);
       let prestamos_JSON = JSON.stringify(listado_prestamos);
       localStorage.setItem("prestamos", prestamos_JSON);
 

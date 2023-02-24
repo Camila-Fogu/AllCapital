@@ -87,32 +87,36 @@ boton_login.addEventListener("click", function () {
   let recupero_usuarios = localStorage.getItem("usuarios");
   recupero_usuarios = JSON.parse(recupero_usuarios);
 
-  for (let usuario of recupero_usuarios) {
-    if (
-      nombre_usuario.value == usuario.usuario &&
-      password.value == usuario.contraseña
-    ) {
+  if (recupero_usuarios) {
+    for (let usuario of recupero_usuarios) {
+      if (
+        nombre_usuario.value == usuario.usuario &&
+        password.value == usuario.contraseña
+      ) {
+        let resultados = document.getElementById("resultado_login");
+        continuar = document.createElement("div");
+        continuar.innerHTML = `<h4>${nombre} Ingresaste exitosamente!</h4>
+      <h4>Ya podes comenzar a operar con nuestros servicios!</h4>`;
+        resultados.append(continuar);
+
+        let usuario_logueado = {
+          nombre_usuario: nombre_usuario.value,
+          password: password.value,
+        };
+
+        let logueado_JSON = JSON.stringify(usuario_logueado);
+        sessionStorage.setItem("usuario_logueado", logueado_JSON);
+
+        encontrado = 1;
+      }
+    }
+    if (encontrado != 1) {
       let resultados = document.getElementById("resultado_login");
       continuar = document.createElement("div");
-      continuar.innerHTML = `<h4>${nombre} Ingresaste exitosamente!</h4>
-      <h4>Ya podes comenzar a operar con nuestros servicios!</h4>`;
+      continuar.innerHTML = `<h4>Los datos ingresados no corresponden a un usuario registrado</h4>`;
       resultados.append(continuar);
-
-      let usuario_logueado = {
-        nombre_usuario: nombre_usuario.value,
-        password: password.value,
-      };
-
-      let logueado_JSON = JSON.stringify(usuario_logueado);
-      sessionStorage.setItem("usuario_logueado", logueado_JSON);
-
-      encontrado = 1;
     }
-  }
-  if (encontrado != 1) {
-    let resultados = document.getElementById("resultado_login");
-    continuar = document.createElement("div");
-    continuar.innerHTML = `<h4>Los datos ingresados no corresponden a un usuario registrado</h4>`;
-    resultados.append(continuar);
+  } else {
+    alert("Los datos ingresados no corresponden a un usuario registrado");
   }
 });
