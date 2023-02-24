@@ -25,7 +25,6 @@ let id_buscado = "";
 //CLASS PRESTAMO
 class Prestamo {
   constructor(monto, cuotas, interes, monto_total, monto_cuotas) {
-
     this.id = this.getNextId();
     this.monto = monto;
     this.cuotas = cuotas;
@@ -35,13 +34,12 @@ class Prestamo {
   }
 
   getNextId = () => {
-    // en el caso de que el listado de prestamos este vacio el id seria 1 ya que es el 1ro
-    if(listado_prestamos.length === 0){
-      return 1
+    if (listado_prestamos.length === 0) {
+      return 1;
     }
-    // sino , busco el ultimo prestamo 
-    const ultimoPrestamo = listado_prestamos[listado_prestamos.length - 1]
-    return ultimoPrestamo.id + 1 // devuelvo el ultimo id + 1
+
+    const ultimoPrestamo = listado_prestamos[listado_prestamos.length - 1];
+    return ultimoPrestamo.id + 1;
   };
 }
 
@@ -93,7 +91,7 @@ simular.addEventListener("click", function () {
         listado_prestamos.push(nuevo_prestamo);
         let prestamos_JSON = JSON.stringify(listado_prestamos);
         localStorage.setItem("prestamos", prestamos_JSON);
-        console.log(listado_prestamos)
+        console.log(listado_prestamos);
 
         continuar.innerHTML = `<h2>Usted ha solicitado su prestamo n° ${listado_prestamos.length} exitosamente</h2>
         <button class="inputBoton" id="volver"><a href="simulador.html" class="nav-link active">Simular otro préstamo</a></button>`;
@@ -104,22 +102,31 @@ simular.addEventListener("click", function () {
       }
     });
   } else {
-    alert("Cantidad de cuotas incorrecta");
+    Swal.fire({
+      icon: "warning",
+      iconColor: "#399b53",
+      color: "#276938",
+      title: "Cantidad de cuotas incorrecta",
+      text: "Usted puede solicitar 3, 6 o 12 cuotas",
+      showClass: {
+        popup: "animate__animated animate__bounceIn",
+      },
+      hideClass: {
+        popup: "animate__animated animate__bounceOut",
+      },
+    });
   }
 });
 
 let consultar = document.getElementById("consultar");
-consultar.addEventListener("click", function () 
-{
+consultar.addEventListener("click", function () {
   let listado_prestamos = JSON.parse(localStorage.getItem("prestamos"));
-  if (listado_prestamos) 
-  {
+  if (listado_prestamos) {
     let resultado_consulta = document.getElementById("resultado_consulta");
-    resultado_consulta.innerHTML = ''
+    resultado_consulta.innerHTML = "";
     let arrays = document.createElement("ul");
 
-    for (let prestamo of listado_prestamos) 
-    {
+    for (let prestamo of listado_prestamos) {
       arrays.innerHTML += `<li> PRESTAMO N° ${prestamo.id}</li>
       <li> Monto: ${prestamo.monto}</li>
       <li> Cuotas: ${prestamo.cuotas}</li>
@@ -129,7 +136,7 @@ consultar.addEventListener("click", function ()
       <hr>
       `;
     }
-    
+
     resultado_consulta.append(arrays);
 
     let continuar = document.createElement("div");
@@ -139,12 +146,15 @@ consultar.addEventListener("click", function ()
     <button class="inputBoton" id="cancelar">Cancelar préstamo</button>`;
     resultado_consulta.append(continuar);
 
+    //CANCELACION DE PRESTAMO
     let cancelar = document.getElementById("cancelar");
     cancelar.addEventListener("click", function () {
       let prestamo_cancelar = document.getElementById("numero_cancelar");
       prestamo_cancelar = prestamo_cancelar.value;
 
-      listado_prestamos = listado_prestamos.filter((prestamo) => prestamo.id != prestamo_cancelar);
+      listado_prestamos = listado_prestamos.filter(
+        (prestamo) => prestamo.id != prestamo_cancelar
+      );
       let prestamos_JSON = JSON.stringify(listado_prestamos);
       localStorage.setItem("prestamos", prestamos_JSON);
 
@@ -153,6 +163,17 @@ consultar.addEventListener("click", function ()
       resultado_consulta.append(cancelado);
     });
   } else {
-    alert("Usted no tiene préstamos solicitados");
+    Swal.fire({
+      icon: "info",
+      iconColor: "#399b53",
+      color: "#276938",
+      title: "Usted no ha solicitado ningún préstamo aún",
+      showClass: {
+        popup: "animate__animated animate__bounceIn",
+      },
+      hideClass: {
+        popup: "animate__animated animate__bounceOut",
+      },
+    });
   }
 });

@@ -127,8 +127,7 @@ boton_login.addEventListener("click", function () {
         icon: "warning",
         iconColor: "#399b53",
         color: "#276938",
-        title: "Error",
-        text: "Los datos ingresados no corresponden a un usuario registrado",
+        title: "Los datos ingresados no corresponden a un usuario registrado",
         showClass: {
           popup: "animate__animated animate__bounceIn",
         },
@@ -142,8 +141,7 @@ boton_login.addEventListener("click", function () {
       icon: "warning",
       iconColor: "#399b53",
       color: "#276938",
-      title: "Error",
-      text: "Los datos ingresados no corresponden a un usuario registrado",
+      title: "Los datos ingresados no corresponden a un usuario registrado",
       showClass: {
         popup: "animate__animated animate__bounceIn",
       },
