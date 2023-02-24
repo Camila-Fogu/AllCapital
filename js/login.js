@@ -48,7 +48,18 @@ boton_registro.addEventListener("click", function () {
   contraseña_rep = contraseña_rep.value;
 
   if (contraseña != contraseña_rep) {
-    alert("Las contraseñas no coinciden. Por favor vuelva a ingresarlas");
+    /*alert("Las contraseñas no coinciden. Por favor vuelva a ingresarlas");*/
+    Swal.fire({
+      icon: "error",
+      title: "Las contraseñas no coinciden!",
+      text: "Por favor vuelva a ingresarlas",
+      showClass: {
+        popup: "animate__animated animate__bounceIn",
+      },
+      hideClass: {
+        popup: "animate__animated animate__bounceOut",
+      },
+    });
   } else {
     let nuevo_usuario = new Usuario(
       nombre,
