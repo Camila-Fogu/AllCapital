@@ -48,9 +48,10 @@ boton_registro.addEventListener("click", function () {
   contraseña_rep = contraseña_rep.value;
 
   if (contraseña != contraseña_rep) {
-    /*alert("Las contraseñas no coinciden. Por favor vuelva a ingresarlas");*/
     Swal.fire({
-      icon: "error",
+      icon: "warning",
+      iconColor: "#399b53",
+      color: "#276938",
       title: "Las contraseñas no coinciden!",
       text: "Por favor vuelva a ingresarlas",
       showClass: {
@@ -122,12 +123,33 @@ boton_login.addEventListener("click", function () {
       }
     }
     if (encontrado != 1) {
-      let resultados = document.getElementById("resultado_login");
-      continuar = document.createElement("div");
-      continuar.innerHTML = `<h4>Los datos ingresados no corresponden a un usuario registrado</h4>`;
-      resultados.append(continuar);
+      Swal.fire({
+        icon: "warning",
+        iconColor: "#399b53",
+        color: "#276938",
+        title: "Error",
+        text: "Los datos ingresados no corresponden a un usuario registrado",
+        showClass: {
+          popup: "animate__animated animate__bounceIn",
+        },
+        hideClass: {
+          popup: "animate__animated animate__bounceOut",
+        },
+      });
     }
   } else {
-    alert("Los datos ingresados no corresponden a un usuario registrado");
+    Swal.fire({
+      icon: "warning",
+      iconColor: "#399b53",
+      color: "#276938",
+      title: "Error",
+      text: "Los datos ingresados no corresponden a un usuario registrado",
+      showClass: {
+        popup: "animate__animated animate__bounceIn",
+      },
+      hideClass: {
+        popup: "animate__animated animate__bounceOut",
+      },
+    });
   }
 });
