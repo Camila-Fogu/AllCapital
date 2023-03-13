@@ -175,9 +175,9 @@ fetch(
 )
   .then((response) => response.json())
   .then((data) => {
-    let resultado_clima = document.getElementById("resultado_clima");
+    let clima = document.getElementById("clima");
     continuar = document.createElement("div");
     continuar.innerHTML = `<span>El clima en tu ciudad es:</span>
     <p>Temp: ${data.main.temp} - ${data.weather[0].description}</p>`;
-    resultado_clima.append(continuar);
+    clima.append(continuar);
   });
