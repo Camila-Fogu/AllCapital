@@ -10,6 +10,7 @@ fetch(
     let clima = document.getElementById("clima");
     continuar = document.createElement("div");
     continuar.innerHTML = `<span>El clima en Rosario es:</span>
-    <p>Temp: ${data.main.temp} - ${data.weather[0].description}</p>`;
+    <p>Temperatura: ${data.main.temp}</p>
+    <p>Sensación térmica: ${data.main.feels_like}</p>`;
     clima.append(continuar);
   });
