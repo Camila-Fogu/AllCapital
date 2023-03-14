@@ -167,17 +167,17 @@ boton_login.addEventListener("click", function () {
 });
 
 //CLIMA
-let key = "bbf8893c6e8030e157bb633d11a66e17";
+let key = "37ec12ccba6532ed39543d37e8da2048";
 
 fetch(
-  "https://api.openweathermap.org/data/2.5/weather?q=Buenos Aires&units=metric&lang=es&appid=" +
+  "https://api.openweathermap.org/data/2.5/weather?q=Rosario&units=metric&lang=es&appid=" +
     key
 )
   .then((response) => response.json())
   .then((data) => {
     let clima = document.getElementById("clima");
     continuar = document.createElement("div");
-    continuar.innerHTML = `<span>El clima en tu ciudad es:</span>
+    continuar.innerHTML = `<span>El clima en Rosario es:</span>
     <p>Temp: ${data.main.temp} - ${data.weather[0].description}</p>`;
     clima.append(continuar);
   });
